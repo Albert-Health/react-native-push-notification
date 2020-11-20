@@ -58,7 +58,10 @@ public class RNPushNotificationHelper {
     private static final long ONE_HOUR = 60 * ONE_MINUTE;
     private static final long ONE_DAY = 24 * ONE_HOUR;
 
+    private VoiceNotificationPlayer voiceNotificationPlayer;
+    
     public RNPushNotificationHelper(Application context) {
+        this.voiceNotificationPlayer=new VoiceNotificationPlayer(context);
         this.context = context;
         this.config = new RNPushNotificationConfig(context);
         this.scheduledNotificationsPersistence = context.getSharedPreferences(RNPushNotificationHelper.PREFERENCES_KEY, Context.MODE_PRIVATE);
@@ -409,7 +412,11 @@ public class RNPushNotificationHelper {
 
                 soundUri = getSoundUri(soundName);
 
-                notification.setSound(soundUri);
+                if (!soundName.equals("default")) {
+                    voiceNotificationPlayer.playNotification(soundName);
+                } else {
+                    notification.setSound(soundUri);
+                }
             }
 
             if (soundUri == null || Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
