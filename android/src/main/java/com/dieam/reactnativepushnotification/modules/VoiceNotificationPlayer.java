@@ -24,14 +24,19 @@ public class VoiceNotificationPlayer {
         if (isActive() || audio.getRingerMode() == AudioManager.RINGER_MODE_SILENT)
             return;
 
-        MediaPlayer mediaPlayer = new MediaPlayer();
-        try {
-            mediaPlayer.setDataSource(soundName);
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-            activatedAt = System.currentTimeMillis();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        activatedAt = System.currentTimeMillis();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(soundName);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }
