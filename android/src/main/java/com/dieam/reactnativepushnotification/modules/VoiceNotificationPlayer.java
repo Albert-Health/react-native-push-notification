@@ -20,7 +20,7 @@ public class VoiceNotificationPlayer {
         return activeFor >= 0 && activeFor <= DURATION;
     }
 
-    public void playNotification(String soundName) {
+    public void playNotification(final String soundName) {
         if (isActive() || audio.getRingerMode() == AudioManager.RINGER_MODE_SILENT)
             return;
 
