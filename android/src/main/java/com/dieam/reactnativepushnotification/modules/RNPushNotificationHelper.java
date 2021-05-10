@@ -72,7 +72,7 @@ public class RNPushNotificationHelper {
         Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
         String className = launchIntent.getComponent().getClassName();
         try {
-            if (className.endsWith("albert"))
+            if (!className.contains("oyak"))
                 className="albert.health.MainActivity";
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
